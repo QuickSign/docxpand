@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "docxpand"
+version = "0.1.0"
+description = "DocXPand dataset generation code"
+authors = ["QuickSign"]
+license = "MIT License"
+readme = "README.md"
+packages = [{include = "docxpand"}]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+opencv-python = "^4.7.0.72"
+selenium = "^4.6.1"
+python-magic = "^0.4.27"
+Faker = "^19.1.0"
+lxml = "^4.9.1"
+zxing-cpp = "^2.0.0"
+dateparser = "^1.1.8"
+deepface = "^0.0.79"
+imagehash = "^4.3.1"
+protobuf = "^3.14.0"
+numpy = "^1.20.0"
+pycountry = "^22.3.5"
+python-dateutil = "^2.8.2"
+tensorflow-cpu = "2.9.0"
+pydantic = "^1.10.7"
+shapely = "^2.0.1"
+rapidfuzz = "^3.4.0"
+tesserocr = "^2.6.2"
+lpips = "^0.1.4"
+torch = "2.0.0"
+matplotlib = "^3.8.2"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+pytest = "^7.3.0"
+coverage = "^7.2.3"
+autoflake = "^2.0.2"
+pytest-cov = "^4.0.0"
+
+[build-system]
+requires = ["poetry>=1.0"]
+build-backend = "poetry.masonry.api"

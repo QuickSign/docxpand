@@ -1,0 +1,423 @@
+{
+    "name": "ID_CARD_TD1_B",
+    "dpi": 300,
+    "width": 1011,
+    "height": 637,
+    "context": {
+        "gender": {
+            "male": 0.48,
+            "female": 0.48,
+            "nonbinary": 0.04
+        },
+        "ethnicity": {
+            "west european": 0.1,
+            "north european": 0.1,
+            "east european": 0.1,
+            "south european": 0.1,
+            "north african": 0.1,
+            "african": 0.1,
+            "asian": 0.1,
+            "indian": 0.1,
+            "middle eastern": 0.1,
+            "south american": 0.1
+        },
+        "name_locale": {
+            "en_GB": 0.8,
+            "en_IE": 0.06,
+            "en_US": 0.02,
+            "de_DE": 0.02,
+            "tr_TR": 0.02,
+            "fr_FR": 0.02,
+            "it_IT": 0.02,
+            "es_ES": 0.02,
+            "nl_NL": 0.02
+        },
+        "locale": "en_GB"
+    },
+    "sides": {
+        "front": {
+            "template": "front.svg",
+            "fields": [
+                {
+                    "name": "gender",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "docxpand.providers.GenderProvider",
+                        "__method__": "get_gender_letter",
+                        "call_context": {
+                            "gender": "gender"
+                        }
+                    }
+                },
+                {
+                    "name": "document_number",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "faker.providers.BaseProvider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "bothify",
+                        "call_args": {
+                            "text": "??#?#??##",
+                            "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        }
+                    }
+                },
+                {
+                    "name": "personal_number",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "faker.providers.BaseProvider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "bothify",
+                        "call_args": {
+                            "text": "????##",
+                            "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        }
+                    }
+                },
+                {
+                    "name": "can",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "faker.providers.BaseProvider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "bothify",
+                        "call_args": {
+                            "text": "######"
+                        }
+                    }
+                },
+                {
+                    "name": "family_name",
+                    "type": "name",
+                    "provider": {
+                        "__class__": "faker.providers.person.{name_locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "last_name_{gender}"
+                    },
+                    "parts": {
+                        "1": 0.85,
+                        "2": 0.15
+                    },
+                    "separator": "-",
+                    "max_chars_per_line": 24,
+                    "lines": 1
+                },
+                {
+                    "name": "birth_name",
+                    "type": "name",
+                    "provider": {
+                        "__class__": "faker.providers.person.{name_locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "last_name_{gender}"
+                    },
+                    "parts": {
+                        "1": 0.85,
+                        "2": 0.15
+                    },
+                    "separator": "-",
+                    "max_chars_per_line": 45,
+                    "lines": 1,
+                    "conditional": {
+                        "__class__": "docxpand.conditionals.BirthNameConditional",
+                        "__method__": "maybe",
+                        "call_context": {
+                            "gender": "gender"
+                        },
+                        "call_args": {
+                            "probability_by_gender": {
+                                "male": 0.05,
+                                "female": 0.2,
+                                "nonbinary": 0.2
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "given_name",
+                    "type": "name",
+                    "provider": {
+                        "__class__": "faker.providers.person.{name_locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "first_name_{gender}"
+                    },
+                    "parts": {
+                        "1": 0.6,
+                        "2": 0.25,
+                        "3": 0.1,
+                        "4": 0.03,
+                        "5": 0.015,
+                        "6": 0.005
+                    },
+                    "separator": ", ",
+                    "max_chars_per_line": 45
+                },
+                {
+                    "name": "birth_date",
+                    "type": "date",
+                    "format": "%d.%m.%Y",
+                    "provider": {
+                        "__class__": "faker.providers.date_time.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "date_of_birth",
+                        "call_args": {
+                            "minimum_age": 18,
+                            "maximum_age": 100
+                        }
+                    },
+                    "lines": 1
+                },
+                {
+                    "name": "nationality",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "docxpand.providers.ChoiceProvider",
+                        "init_args": {
+                            "choices": {
+                                "LBR": 1.0
+                            }
+                        },
+                        "__method__": "choice"
+                    }
+                },
+                {
+                    "name": "birth_place",
+                    "type": "text",
+                    "format": "{city}",
+                    "provider": {
+                        "__class__": "faker.providers.address.{locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": {
+                            "city": "city"
+                        }
+                    }
+                },
+                {
+                    "name": "birth_date_and_place",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "docxpand.providers.FormatProvider",
+                        "__method__": "format",
+                        "call_args": {
+                            "formatter": "|birth_date& / |birth_place&"
+                        },
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        }
+                    },
+                    "lines": 1
+                },
+                {
+                    "name": "expires",
+                    "type": "date",
+                    "format": "%d.%m.%Y",
+                    "provider": {
+                        "__class__": "faker.providers.date_time.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "date_between",
+                        "call_args": {
+                            "start_date": "today",
+                            "end_date": "+10y"
+                        }
+                    },
+                    "lines": 1
+                },
+                {
+                    "name": "signature",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "docxpand.providers.signature.Provider",
+                        "init_context": {},
+                        "__method__": "signature",
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        }
+                    }
+                },
+                {
+                    "name": "photo",
+                    "type": "photo",
+                    "provider": {
+                        "__class__": "docxpand.providers.photo.StableDiffusionProvider",
+                        "__method__": "id_photo",
+                        "call_args": {
+                            "width": 881,
+                            "height": 1132
+                        },
+                        "call_context": {
+                            "existing_fields": "existing_fields",
+                            "gender": "gender",
+                            "ethnicity": "ethnicity",
+                            "url": "url"
+                        }
+                    }
+                },
+                {
+                    "name": "ghost",
+                    "type": "photo",
+                    "provider": {
+                        "__class__": "docxpand.providers.photo.Provider",
+                        "__method__": "ghost_image",
+                        "call_args": {
+                            "width": 881,
+                            "height": 1132,
+                            "mode": "halftone"
+                        },
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        }
+                    }
+                }
+            ]
+        },
+        "back": {
+            "template": "back.svg",
+            "fields": [
+                {
+                    "name": "ghost",
+                    "type": "photo",
+                    "provider": {
+                        "__class__": "docxpand.providers.photo.Provider",
+                        "__method__": "ghost_image",
+                        "call_args": {
+                            "width": 881,
+                            "height": 1132,
+                            "mode": "halftone"
+                        },
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        }
+                    }
+                },
+                {
+                    "name": "can_number",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "docxpand.providers.CopyProvider",
+                        "__method__": "copy",
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        },
+                        "call_args": {
+                            "field_name": "can",
+                            "default": "123456"
+                        }
+                    }
+                },
+                {
+                    "name": "date_issued",
+                    "type": "date",
+                    "format": "%d.%m.%Y",
+                    "provider": {
+                        "__class__": "docxpand.providers.date_time.Provider",
+                        "__method__": "date_plus_delta",
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        },
+                        "call_args": {
+                            "field_path": [
+                                "front",
+                                "expires"
+                            ],
+                            "years": -10,
+                            "months": 0,
+                            "days": 1
+                        }
+                    }
+                },
+                {
+                    "name": "place_issued",
+                    "type": "text",
+                    "format": "{city}",
+                    "provider": {
+                        "__class__": "faker.providers.address.{locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": {
+                            "city": "city"
+                        }
+                    }
+                },
+                {
+                    "name": "date_and_place_issued",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "docxpand.providers.FormatProvider",
+                        "__method__": "format",
+                        "call_args": {
+                            "formatter": "|date_issued&, |place_issued&"
+                        },
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        }
+                    },
+                    "lines": 1
+                },
+                {
+                    "name": "authority",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "docxpand.providers.authority.{locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "authority",
+                        "call_args": {
+                            "max_length": 50
+                        }
+                    }
+                },
+                {
+                    "name": "authority_signature",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "docxpand.providers.signature.Provider",
+                        "init_context": {},
+                        "__method__": "signature_knowing_key",
+                        "call_args": {
+                            "key": "authority"
+                        },
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        }
+                    }
+                },
+                {
+                    "name": "mrz",
+                    "type": "mrz",
+                    "provider": {
+                        "__class__": "docxpand.providers.mrz.Provider",
+                        "__method__": "td1",
+                        "call_args": {
+                            "document_code": "ID"
+                        },
+                        "call_context": {
+                            "existing_fields": "existing_fields",
+                            "gender": "gender"
+                        }
+                    },
+                    "lines": 3
+                }
+            ]
+        }
+    }
+}

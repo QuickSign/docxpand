@@ -1,0 +1,113 @@
+:root {
+    --gx: 50%;
+    --gy: 50%;
+    --sx: 8px;
+    --sy: 8px;
+    --s: 1;
+    --o: 0;
+    --rx: 0deg;
+    --ry: 0deg;
+    --rx-delta: 0deg;
+    --ry-delta: 0deg;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 64px;
+    align-items: stretch;
+    justify-items: center;
+    margin: 64px;
+}
+
+.rotator img {
+    border: 0;
+    border-radius: 1.8vw;
+    max-width: 100%;
+}
+
+.rotator img.td3 {
+    border-radius: 0 0 1.0vw 1.0vw;
+}
+
+.rotator.interactive {
+    transform: rotateX(calc(var(--rx) + var(--rx-delta))) rotateY(calc(var(--ry) + var(--ry-delta)));
+    transform-style: preserve-3d;
+}
+
+.rotator.interactive img {
+    box-shadow: var(--sx) var(--sy) 12px 0px  rgba(0, 0, 0, 0.5);
+}
+
+.rotator {
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    background: top;
+    padding: 0;
+    width: 100%;
+    transition: transform 0.1s ease-in-out;
+}
+
+.rotator.flipping {
+    transition: transform 1.0s ease-in-out;
+}
+
+/* Glowing effect */
+.glare {
+    position: absolute;
+    top: 0;
+    /* background: radial-gradient(farthest-corner circle at var(--gx) var(--gy), rgba(255,255,255,.8) 10%, rgba(255,255,255,.65) 20%, rgba(0,0,0,.5) 90%); */
+    background: radial-gradient(farthest-corner circle at var(--gx) var(--gy),
+        rgba(255,255,255,.8) 10%,
+        rgba(255,255,255,.65) 20%,
+        rgba(0,0,0,.5) 90%
+    );
+    mix-blend-mode: overlay;
+    transform: translateZ(3px);
+    display: grid;
+    width: 100%;
+    height: 100%;
+    opacity: 0%;
+    border-radius: 1.8vw;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.rotator.interactive .glare {
+    opacity: 60%;
+}
+
+/* Lens flare effect */
+.rotator.interactive .glare::before {
+    position: relative;
+    top: 0;
+    display: block;
+    width: 100%;
+    height: 200%;
+    content: "";
+    background: radial-gradient(farthest-corner circle at calc(90% - 0.8*var(--gx)) calc(90% - 0.8*var(--gy)),
+        rgba(255,255,255,.8) 0.5%,
+        rgba(255,255,255,.65) 1%,
+        transparent 2%
+    );
+    opacity: 100%;
+    border-radius: 1.8vw;
+    mix-blend-mode: overlay;
+}
+.rotator.interactive .glare::after {
+    position: relative;
+    top: -100%;
+    display: block;
+    width: 100%;
+    height: 200%;
+    content: "";
+    background: radial-gradient(farthest-corner circle at calc(100% - var(--gx)) calc(100% - var(--gy)),
+        rgba(255,255,255,.8) 1%,
+        rgba(255,255,255,.65) 3%,
+        transparent 5%
+    );
+    opacity: 100%;
+    border-radius: 1.8vw;
+    mix-blend-mode: overlay;
+}

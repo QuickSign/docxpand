@@ -1,0 +1,352 @@
+{
+    "name": "ID_CARD_TD1_A",
+    "dpi": 300,
+    "width": 1011,
+    "height": 637,
+    "context": {
+        "gender": {
+            "male": 0.48,
+            "female": 0.48,
+            "nonbinary": 0.04
+        },
+        "ethnicity": {
+            "west european": 0.1,
+            "north european": 0.1,
+            "east european": 0.1,
+            "south european": 0.1,
+            "north african": 0.1,
+            "african": 0.1,
+            "asian": 0.1,
+            "indian": 0.1,
+            "middle eastern": 0.1,
+            "south american": 0.1
+        },
+        "name_locale": {
+            "de_DE": 0.82,
+            "de_AT": 0.02,
+            "de_CH": 0.02,
+            "tr_TR": 0.08,
+            "fr_FR": 0.01,
+            "it_IT": 0.01,
+            "es_ES": 0.01,
+            "nl_NL": 0.01,
+            "pl_PL": 0.01,
+            "cs_CZ": 0.01
+        },
+        "locale": "de_DE"
+    },
+    "sides": {
+        "front": {
+            "template": "front.svg",
+            "fields": [
+                {
+                    "name": "document_number",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "faker.providers.BaseProvider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "bothify",
+                        "call_args": {
+                            "text": "??###??####",
+                            "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        }
+                    }
+                },
+                {
+                    "name": "family_name",
+                    "type": "name",
+                    "provider": {
+                        "__class__": "faker.providers.person.{name_locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "last_name_{gender}"
+                    },
+                    "parts": {
+                        "1": 0.85,
+                        "2": 0.15
+                    },
+                    "separator": "-",
+                    "max_chars_per_line": 24,
+                    "lines": 1
+                },
+                {
+                    "name": "birth_name",
+                    "type": "name",
+                    "provider": {
+                        "__class__": "faker.providers.person.{name_locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "last_name_{gender}"
+                    },
+                    "parts": {
+                        "1": 0.85,
+                        "2": 0.15
+                    },
+                    "separator": "-",
+                    "max_chars_per_line": 45,
+                    "lines": 1,
+                    "conditional": {
+                        "__class__": "docxpand.conditionals.BirthNameConditional",
+                        "__method__": "maybe",
+                        "call_context": {
+                            "gender": "gender"
+                        },
+                        "call_args": {
+                            "probability_by_gender": {
+                                "male": 0.05,
+                                "female": 0.2,
+                                "nonbinary": 0.2
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "given_name",
+                    "type": "name",
+                    "provider": {
+                        "__class__": "faker.providers.person.{name_locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "first_name_{gender}"
+                    },
+                    "parts": {
+                        "1": 0.6,
+                        "2": 0.25,
+                        "3": 0.1,
+                        "4": 0.03,
+                        "5": 0.015,
+                        "6": 0.005
+                    },
+                    "separator": ", ",
+                    "max_chars_per_line": 25,
+                    "lines": 2
+                },
+                {
+                    "name": "birth_date",
+                    "type": "date",
+                    "format": "%d.%m.%Y",
+                    "provider": {
+                        "__class__": "faker.providers.date_time.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "date_of_birth",
+                        "call_args": {
+                            "minimum_age": 18,
+                            "maximum_age": 100
+                        }
+                    },
+                    "lines": 1
+                },
+                {
+                    "name": "nationality",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "docxpand.providers.ChoiceProvider",
+                        "init_args": {
+                            "choices": {
+                                "BRD": 1.0
+                            }
+                        },
+                        "__method__": "choice"
+                    }
+                },
+                {
+                    "name": "birth_place",
+                    "type": "text",
+                    "format": "{city} ({state})",
+                    "provider": {
+                        "__class__": "docxpand.providers.address.{locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": {
+                            "city": "city",
+                            "state": "state_abbreviation"
+                        }
+                    }
+                },
+                {
+                    "name": "expires",
+                    "type": "date",
+                    "format": "%d.%m.%Y",
+                    "provider": {
+                        "__class__": "faker.providers.date_time.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "date_between",
+                        "call_args": {
+                            "start_date": "today",
+                            "end_date": "+10y"
+                        }
+                    },
+                    "lines": 1
+                },
+                {
+                    "name": "card_access_number",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "faker.providers.BaseProvider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "numerify",
+                        "call_args": {
+                            "text": "######"
+                        }
+                    }
+                },
+                {
+                    "name": "signature",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "docxpand.providers.signature.Provider",
+                        "init_context": {},
+                        "__method__": "signature",
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        }
+                    }
+                },
+                {
+                    "name": "photo",
+                    "type": "photo",
+                    "provider": {
+                        "__class__": "docxpand.providers.photo.StableDiffusionProvider",
+                        "__method__": "id_photo",
+                        "call_args": {
+                            "width": 881,
+                            "height": 1132
+                        },
+                        "call_context": {
+                            "existing_fields": "existing_fields",
+                            "gender": "gender",
+                            "ethnicity": "ethnicity",
+                            "url": "url"
+                        }
+                    }
+                }
+            ]
+        },
+        "back": {
+            "template": "back.svg",
+            "fields": [
+                {
+                    "name": "height",
+                    "type": "text",
+                    "provider": {
+                        "__class__": "docxpand.providers.HeightProvider",
+                        "__method__": "height_in_meters",
+                         "call_context": {
+                            "gender": "gender"
+                        }
+                    }
+                },
+                {
+                    "name": "date_issued",
+                    "type": "date",
+                    "format": "%d.%m.%Y",
+                    "provider": {
+                        "__class__": "docxpand.providers.date_time.Provider",
+                        "__method__": "date_plus_delta",
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        },
+                        "call_args": {
+                            "field_path": [
+                                "front",
+                                "expires"
+                            ],
+                            "years": -10,
+                            "months": 0,
+                            "days": 1
+                        }
+                    },
+                    "lines": 1
+                },
+                {
+                    "name": "authority",
+                    "type": "text",
+                    "format": "Präfektur {state}",
+                    "provider": {
+                        "__class__": "docxpand.providers.address.{locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": {
+                            "state": "state"
+                        }
+                    }
+                },
+                {
+                    "name": "address",
+                    "type": "address",
+                    "separator": "\n",
+                    "provider": {
+                        "__class__": "docxpand.providers.address.{locale}.Provider",
+                        "init_context": {
+                            "generator": "generator"
+                        },
+                        "__method__": "address"
+                    },
+                    "lines": 3
+                },
+                {
+                    "name": "mrz",
+                    "type": "mrz",
+                    "provider": {
+                        "__class__": "docxpand.providers.mrz.Provider",
+                        "__method__": "td1",
+                        "call_args": {
+                            "document_code": "ID"
+                        },
+                        "call_context": {
+                            "existing_fields": "existing_fields",
+                            "gender": "gender"
+                        }
+                    },
+                    "lines": 3
+                },
+                {
+                    "name": "ghost",
+                    "type": "photo",
+                    "provider": {
+                        "__class__": "docxpand.providers.photo.Provider",
+                        "__method__": "ghost_image",
+                        "call_args": {
+                            "width": 881,
+                            "height": 1132,
+                            "mode": "halftone"
+                        },
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        }
+                    }
+                },
+                {
+                    "name": "Datamatrix",
+                    "type": "photo",
+                    "provider": {
+                        "__class__": "docxpand.providers.barcode.Provider",
+                        "__method__": "generate_barcode",
+                        "call_args": {
+                            "document_code": "ID",
+                            "barcode_format_name": "Datamatrix",
+                            "width": 512,
+                            "height": 512
+                        },
+                        "call_context": {
+                            "existing_fields": "existing_fields"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
