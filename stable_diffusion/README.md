@@ -10,8 +10,7 @@ Skipping the CUDA test is only done because GPUs are not available during build.
 * Without GPU (not recommended)
 If you only have CPU available on your server, build it like this :
 ```
-export EXTRA_COMMANDLINE_ARGS="--precision full --no-half"
-docker build -t stable_diffusion .
+docker build -t stable_diffusion  --build-arg EXTRA_COMMANDLINE_ARGS="--precision full --no-half" .
 ```
 
 # Run the docker container
