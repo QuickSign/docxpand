@@ -37,7 +37,7 @@ To generate documents, run:
 
 To insert document in target images, run:
 
-    poetry run python scripts/insert_generated_documents_in_scenes.py -di <document_images_directory> -dd <documents_dataset> -sd <scene_images_directory> -sd <scenes_dataset> -o <output_directory>
+    poetry run python scripts/insert_generated_documents_in_scenes.py -di <document_images_directory> -dd <documents_dataset> -si <scene_images_directory> -sd <scenes_dataset> -o <output_directory>
 
 # *DocXPand-25k* dataset
 The synthetic ID document images dataset ("DocXPand-25k"), released alongside this tool, is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
