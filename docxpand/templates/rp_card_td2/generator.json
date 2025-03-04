@@ -345,7 +345,7 @@
                     "type": "text",
                     "format": "{city}",
                     "provider": {
-                        "__class__": "docxpand.providers.address.{locale}.Provider",
+                        "__class__": "faker.providers.address.{locale}.Provider",
                         "init_context": {
                             "generator": "generator"
                         },
